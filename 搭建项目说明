@@ -1,0 +1,8 @@
+1、使用jdk为1.8版本
+2、第一次配置项目时，需修改 main/java/cn/lcy/xxmall/constants/GlobalConstants.java文件下的：
+    private static String bgFileUploadUrl 属性。
+    具体属性值在controller（随便一个controller都可以） 使用httpSeHttpServletRequest.getSession().getServletContext().getRealPath("/") 获取该路径。
+    并且在TestAdminService测试类里生成文件目录。
+3、在db.properties(main/resorces/config) 文件里配置数据库参数。
+4、在generatorConfig.xml(main/resorces) 文件里配置数据库参数。用于自动生成dao类
+5、generatorConfig.xml文件下的：<classPathEntry location="G:/mysql-connector-java-5.1.6-bin.jar" /> 使用的是绝对路径。需要下载该jar并放在指定的位置。
