@@ -47,7 +47,7 @@ public interface ProductService {
      * @param product 商品对象
      * @return 添加商品是自动递增的主键值
      */
-    int insertProductByUsername(String username, Product product);
+    Integer insertProductByUsername(String username, Product product, String productMainImageUrl);
 
 
     /**
@@ -98,7 +98,7 @@ public interface ProductService {
      * @param productSkuImages 商品SKU图片
      * @return
      */
-    boolean addProductOfValidate(String username, Product product, String prodictSKU, String productKeyword, List<MultipartFile> productMainImages, Map<String,List<MultipartFile>> productSkuImages);
+    boolean addProductOfValidate(String username, Product product, String prodictSKU,String skuDetailedInofString, String productKeyword, List<MultipartFile> productMainImages, Map<String,List<MultipartFile>> productSkuImages);
 
     int validateSKU(String skuString);
 }

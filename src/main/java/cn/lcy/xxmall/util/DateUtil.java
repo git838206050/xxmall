@@ -10,7 +10,7 @@ import java.util.Date;
  */
 @Component
 public class DateUtil {
-    static final String []TYPE = {"yyyy-MM-dd","yyyy-MM-dd HH:mm:ss","yyyy年MM月dd日 HH时mm分ss秒"};
+    static final String []TYPE = {"yyyy-MM-dd","yyyy-MM-dd HH:mm:ss","yyyy年MM月dd日 HH时mm分ss秒","yyyyMMddhhmmssSSS"};
     static Date date;
     /**
      * 获取时间，利用静态方法配合@Component的单例类，

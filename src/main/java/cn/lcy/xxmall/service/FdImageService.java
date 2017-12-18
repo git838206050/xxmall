@@ -22,13 +22,13 @@ public interface FdImageService {
      * 获取所有图片
      * @return
      */
-    List<FdImage> getBgImages();
+    List<FdImage> getFdImages();
 
     /**
      * 根据标识获取指定图片对象
      * @param imageEncrypt 图片加密后的密文
      * @return
      */
-    FdImage getBgImageByImageEncrypt(String imageEncrypt);
+    FdImage getFdImageByImageEncrypt(String imageEncrypt);
 
 }

@@ -35,29 +35,29 @@ public class FileUtilByLcy {
         }
         String fileName = null;
         // 返回上传状态。
-            String result = "0";
+        String result = "0";
         // 判断文件是否不为空
         if(file != null && !file.isEmpty()){
-            // 把文件后缀替换成MultipartFile的getContentType输出的类型
-            for(int i=0; i<fileType.length; i++){
-                if(fileType[i].equals("jpg") && file.getContentType().equals("image/jpeg")){
-                    result = "1";
-                    fileName = Md5Util.md5( DateUtil.convertDateToString( DateUtil.getDate(),1) )+".jpg";
-                    filePath += fileName;
-                }else if(fileType[i].equals("png") && file.getContentType().equals("image/png")){
-                    result = "1";
-                    fileName = Md5Util.md5( DateUtil.convertDateToString( DateUtil.getDate(),1) )+".png";
-                    filePath += fileName;
-                }
-            }
-
-            // 如果文件大于500k
-            if(file.getSize() > fileSize){
-                result = "-2";
-            }
-
-            // 如果文件是jpg后缀，但是错误、不能显示的图片；
             try {
+                // 把文件后缀替换成MultipartFile的getContentType输出的类型
+                for(int i=0; i<fileType.length; i++){
+                    if(fileType[i].equals("jpg") && file.getContentType().equals("image/jpeg")){
+                        result = "1";
+                        fileName = Md5Util.md5(StrUtil.newString(file.getBytes()))+".jpg";
+                        filePath += fileName;
+                    }else if(fileType[i].equals("png") && file.getContentType().equals("image/png")){
+                        result = "1";
+                        fileName = Md5Util.md5(StrUtil.newString(file.getBytes()))+".png";
+                        filePath += fileName;
+                    }
+                }
+
+                // 如果文件大于500k
+                if(file.getSize() > fileSize){
+                    result = "-2";
+                }
+
+                // 如果文件是jpg后缀，但是错误、不能显示的图片；
                 BufferedImage bi = ImageIO.read(file.getInputStream());
                 if (bi == null) {
                     result = "-4";
@@ -72,6 +72,7 @@ public class FileUtilByLcy {
                 }
             }catch (IOException ioE){
                 result = "0";
+                ioE.printStackTrace();
             }
         }else{
             // 文件为空

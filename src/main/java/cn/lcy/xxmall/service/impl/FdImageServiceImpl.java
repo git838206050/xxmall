@@ -27,7 +27,7 @@ public class FdImageServiceImpl implements FdImageService {
         FdImage fdImage = null;
         int state = 0;
         try {
-            String fileName = Md5Util.md5(DateUtil.convertDateToString(DateUtil.getDate(), 1));
+            String fileName = Md5Util.md5(StrUtil.newString(file.getBytes()));
             // 图片密文
             String fileCiphertext = Md5Util.md5(StrUtil.newString(file.getBytes()));
 
@@ -35,13 +35,16 @@ public class FdImageServiceImpl implements FdImageService {
             FdImageExample fdImageExample = new FdImageExample();
             FdImageExample.Criteria criteria = fdImageExample.or();
             criteria.andImageencrypeEqualTo(fileCiphertext);
-            fdImage = fdImageMapper.selectByExample(fdImageExample).get(0);
+            fdImage = fdImageMapper.selectByExample(fdImageExample).size()<=0 ? null:fdImageMapper.selectByExample(fdImageExample).get(0);
 
             if(fdImage == null){
-                fdImage.setImageurl(fileName);
+                fdImage = new FdImage();
+                fdImage.setImageurl("images\\"+fileName);
                 fdImage.setImageencrype(fileCiphertext);
                 fdImage.setUsenum(1);
-                state = fdImageMapper.insert(fdImage);
+                fdImageMapper.insert(fdImage);
+                state = fdImage.getId();
+                fdImage = null;
             }else{
                 state = fdImage.getId();
             }
@@ -49,13 +52,14 @@ public class FdImageServiceImpl implements FdImageService {
         }catch (Exception e){
             e.printStackTrace();
             state = 0;
+        }finally {
+            return state;
         }
 
-        return state;
     }
 
     @Override
-    public List<FdImage> getBgImages() {
+    public List<FdImage> getFdImages() {
         FdImageExample fdImageExample = new FdImageExample();
         FdImageExample.Criteria criteria = fdImageExample.or();
         criteria.andIdIsNotNull();
@@ -63,10 +67,15 @@ public class FdImageServiceImpl implements FdImageService {
     }
 
     @Override
-    public FdImage getBgImageByImageEncrypt(String imageEncrypt) {
+    public FdImage getFdImageByImageEncrypt(String imageEncrypt) {
         FdImageExample fdImageExample = new FdImageExample();
         FdImageExample.Criteria criteria = fdImageExample.or();
         criteria.andImageencrypeEqualTo(imageEncrypt);
-        return fdImageMapper.selectByExample(fdImageExample).get(0);
+        List<FdImage> fdImageList = fdImageMapper.selectByExample(fdImageExample);
+        FdImage fdImage = null;
+        if(fdImageList.size() != 0){
+            fdImage = fdImageList.get(0);
+        }
+        return fdImage;
     }
 }

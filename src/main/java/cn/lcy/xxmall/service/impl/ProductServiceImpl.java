@@ -1,13 +1,13 @@
 package cn.lcy.xxmall.service.impl;
 
 import cn.lcy.xxmall.dao.ProductMapper;
+import cn.lcy.xxmall.dao.ShopMapper;
 import cn.lcy.xxmall.dao.UserMapper;
-import cn.lcy.xxmall.pojo.Product;
-import cn.lcy.xxmall.pojo.ProductExample;
-import cn.lcy.xxmall.pojo.User;
-import cn.lcy.xxmall.pojo.UserExample;
+import cn.lcy.xxmall.pojo.*;
 import cn.lcy.xxmall.service.ProductService;
+import cn.lcy.xxmall.util.DateUtil;
 import cn.lcy.xxmall.util.FileUtilByLcy;
+import cn.lcy.xxmall.util.StrUtil;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
@@ -85,28 +85,32 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public int insertProductByUsername(String username, Product product) {
+    public Integer insertProductByUsername(String username, Product product, String productMainImageUrl) {
         UserExample userExample = new UserExample();
         UserExample.Criteria userCriteria = userExample.or();
         userCriteria.andUsernameEqualTo(username);
         User user = userMapper.selectByExample(userExample).get(0);
         product.setUploaduserid(user.getId());
+        product.setShopid(user.getStoreid());
+        product.setCreattime(DateUtil.getDate());
+        product.setProductstate((byte)0);
+        product.setMainimageurl(productMainImageUrl);
         productMapper.insert(product);
         return product.getId();
     }
 
     @Override
-    public int insertProduct(int shopId, Product product, String prodictSKU, String productKeyword, List<MultipartFile> productMainImages, Map<String, List<MultipartFile>> productSkuImages) {
+    public int insertProduct(int shopId, Product product, String skuValueString, String productKeyword, List<MultipartFile> productMainImages, Map<String, List<MultipartFile>> productSkuImages) {
         return 0;
     }
 
     @Override
-    public int updateProduct(int shopId, Product product, String prodictSKU, String productKeyword, List<MultipartFile> productMainImages, Map<String, List<MultipartFile>> productSkuImages) {
+    public int updateProduct(int shopId, Product product, String skuValueString, String productKeyword, List<MultipartFile> productMainImages, Map<String, List<MultipartFile>> productSkuImages) {
         return 0;
     }
 
     @Override
-    public boolean addProductOfValidate(String username, Product product, String prodictSKU, String productKeyword, List<MultipartFile> productMainImages, Map<String,List<MultipartFile>> productSkuImages) {
+    public boolean addProductOfValidate(String username, Product product, String skuValueString,String skuDetailedInofString, String productKeyword, List<MultipartFile> productMainImages, Map<String,List<MultipartFile>> productSkuImages) {
         boolean bl = false;
         try{
             String[] keywords = productKeyword.split(",");
@@ -134,51 +138,56 @@ public class ProductServiceImpl implements ProductService {
             }
 
             // 验证 原价格、折扣价格(大于0，不比较原价格与打折后的大小)
-            if(product.getOriginalprive().compareTo(validatePrive)==1 && product.getDiscountprive().compareTo(validatePrive)==1){
+            if(bl && product.getOriginalprive().compareTo(validatePrive)==1 && product.getDiscountprive().compareTo(validatePrive)==1){
                 bl = true;
             }else{
                 bl = false;
             }
 
             // 验证 商品描述
-            if(product.getDescribing().length()>0 && product.getDescribing().length()<=255){
+            if(bl && product.getDescribing().length()>0 && product.getDescribing().length()<=255){
                 bl = true;
             }else{
                 bl = false;
             }
 
             // 验证 商品内容
-            if(product.getContent().length()>0 && product.getContent().length()<=20000){
+            if(bl && product.getContent().length()>0 && product.getContent().length()<=20000){
                 bl = true;
             }else{
                 bl = false;
             }
 
             // 验证 详细图片 最大为1m
-            String[] fileTpe = {"jpg","png"};
+            String[] fileTpe = {"jpg", "png"};
             String fileCatalog = "images\\";
-            for(int i=0; i<productMainImages.size(); i++){
-                //MultipartFile file,Long fileSize,String[] fileType,String fileCatalog,Boolean isValidate,byte fileUrlType
-                if(!FileUtilByLcy.uploadImageFile(productMainImages.get(i), 1048576L, fileTpe,fileCatalog,true,(byte)1).equals("1")){
-                    bl = false;
-                }
-            }
-
-            // 验证商品规划文件
-            for (String str : productSkuImages.keySet()) {
-                productSkuImages.get(str);
-                for(int i=0; i<productSkuImages.get(str).size(); i++){
-                    if(!FileUtilByLcy.uploadImageFile(productMainImages.get(i), 1048576L, fileTpe,fileCatalog,true,(byte)1).equals("1")){
+            if(bl) {
+                for (int i = 0; i < productMainImages.size(); i++) {
+                    //MultipartFile file,Long fileSize,String[] fileType,String fileCatalog,Boolean isValidate,byte fileUrlType
+                    if (!FileUtilByLcy.uploadImageFile(productMainImages.get(i), 1048576L, fileTpe, fileCatalog, true, (byte) 1).equals("1")) {
                         bl = false;
                     }
                 }
+            }
+
+            if(bl) {
+                // 验证商品规划文件
+                for (String str : productSkuImages.keySet()) {
+                    for (int i = 0; i < productSkuImages.get(str).size(); i++) {
+                        if (!FileUtilByLcy.uploadImageFile(productSkuImages.get(str).get(i), 1048576L, fileTpe, fileCatalog, true, (byte) 1).equals("1")) {
+                            bl = false;
+                        }
+                    }
+                }
+
             }
 
             // 验证 商品规格长度
             if(bl){
                 Gson gson = new Gson();
                 Type type = new TypeToken<ArrayList<Object>>() {}.getType();
-                ArrayList<Object> list = gson.fromJson(prodictSKU, type);
+                skuValueString = StrUtil.dislodgeAllTag(skuValueString);
+                ArrayList<Object> list = gson.fromJson(skuValueString, type);
                 LinkedTreeMap linkedTreeMap;
                 int j = 0;
                 for(int i=0; i<list.size(); i++){
