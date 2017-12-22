@@ -82,10 +82,7 @@
 
         <table schema="" tableName="testDao" />
         -->
-        <table schema="" tableName="product_sku" >
-            <columnOverride column="propertyKey" javaType="java.lang.String" jdbcType="VARCHAR" />
-            <columnOverride column="propertyValueGroup" javaType="java.lang.String" jdbcType="VARCHAR" />
-        </table>
+        <table schema="" tableName="advertisement" />
 
     </context>
 </generatorConfiguration>
