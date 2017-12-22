@@ -5,6 +5,7 @@ import cn.lcy.xxmall.pojo.Advertisement;
 import cn.lcy.xxmall.pojo.common.JsonLayui;
 import cn.lcy.xxmall.pojo.common.JsonResult;
 import cn.lcy.xxmall.service.AdvertisementService;
+import cn.lcy.xxmall.util.DateUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,12 +71,25 @@ public class AdvertisementController {
      */
     @RequestMapping(value = "/insertAdvertisements")
     @ResponseBody
-    public JsonResult insertAdvertisements(Advertisement advertisement, @RequestParam(value = "advertisementImage" , required = true)MultipartFile advertisementImage){
+    public JsonResult insertAdvertisements(Advertisement advertisement, @RequestParam(value = "advertimage" , required = true)MultipartFile advertisementImage,
+                                           @RequestParam(value = "owidth" , required = false)String owidth,
+                                           @RequestParam(value = "oheight" , required = false)String oheight,
+                                           @RequestParam(value = "oisfixedshow" , required = false)String oisfixedshow,
+                                           @RequestParam(value = "oisfixedshow" , required = false)String oexpiretime
+                                           ){
         JsonResult jsonResult = new JsonResult();
         try {
-            advertisementService.insertAdvertisement(advertisement, advertisementImage);
-            jsonResult.setErrorCode(GlobalConstants.operaction_success_code);
-            jsonResult.setMessage(GlobalConstants.operaction_success_message);
+            advertisement.setWidth(Double.valueOf(owidth));
+            advertisement.setHeight(Double.valueOf(oheight));
+            advertisement.setIsfixedshow(Byte.valueOf(oisfixedshow));
+            advertisement.setExpiretime(DateUtil.getDate(oexpiretime,0));
+            if( advertisementService.insertAdvertisement(advertisement, advertisementImage) != 0){
+                jsonResult.setErrorCode(GlobalConstants.operaction_success_code);
+                jsonResult.setMessage(GlobalConstants.operaction_success_message);
+            }else{
+                jsonResult.setErrorCode(GlobalConstants.operaction_failed_code);
+                jsonResult.setMessage(GlobalConstants.operaction_failed_code);
+            }
         }catch (Exception e){
             jsonResult.setErrorCode(GlobalConstants.operaction_failed_code);
             jsonResult.setMessage(GlobalConstants.operaction_failed_code);
