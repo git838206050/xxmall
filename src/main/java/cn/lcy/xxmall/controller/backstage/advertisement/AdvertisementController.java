@@ -10,6 +10,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -75,7 +76,7 @@ public class AdvertisementController {
                                            @RequestParam(value = "owidth" , required = false)String owidth,
                                            @RequestParam(value = "oheight" , required = false)String oheight,
                                            @RequestParam(value = "oisfixedshow" , required = false)String oisfixedshow,
-                                           @RequestParam(value = "oisfixedshow" , required = false)String oexpiretime
+                                           @RequestParam(value = "oexpiretime" , required = false)String oexpiretime
                                            ){
         JsonResult jsonResult = new JsonResult();
         try {
@@ -88,11 +89,11 @@ public class AdvertisementController {
                 jsonResult.setMessage(GlobalConstants.operaction_success_message);
             }else{
                 jsonResult.setErrorCode(GlobalConstants.operaction_failed_code);
-                jsonResult.setMessage(GlobalConstants.operaction_failed_code);
+                jsonResult.setMessage(GlobalConstants.operaction_failed_message);
             }
         }catch (Exception e){
             jsonResult.setErrorCode(GlobalConstants.operaction_failed_code);
-            jsonResult.setMessage(GlobalConstants.operaction_failed_code);
+            jsonResult.setMessage(GlobalConstants.operaction_failed_message);
         }
         return jsonResult;
     }
@@ -102,7 +103,7 @@ public class AdvertisementController {
      * @param advertisementId
      * @return
      */
-    @RequestMapping(value = "/expireAdvertisements")
+    @RequestMapping(value = "/update")
     @ResponseBody
     public JsonResult expireAdvertisements(@RequestParam(value = "advertisementId" , required = true)Integer advertisementId){
         JsonResult jsonResult = new JsonResult();
@@ -112,12 +113,133 @@ public class AdvertisementController {
                 jsonResult.setMessage(GlobalConstants.operaction_success_message);
             }else{
                 jsonResult.setErrorCode(GlobalConstants.operaction_failed_code);
-                jsonResult.setMessage(GlobalConstants.operaction_failed_code);
+                jsonResult.setMessage(GlobalConstants.operaction_failed_message);
             }
         }catch (Exception e){
             jsonResult.setErrorCode(GlobalConstants.operaction_failed_code);
-            jsonResult.setMessage(GlobalConstants.operaction_failed_code);
+            jsonResult.setMessage(GlobalConstants.operaction_failed_message);
         }
         return jsonResult;
     }
+
+    /**
+     * 更新广告到期时间
+     * @param targetId 广告id
+     * @param expiretime 广告到期时间
+     * @return
+     */
+    @PostMapping(value = "/updateExpiretime")
+    @ResponseBody
+    public JsonResult updateExpiretime(@RequestParam(value = "targetId" , required = true)Integer targetId,
+                                       @RequestParam(value = "expiretime" , required = true)String expiretime){
+        JsonResult jsonResult = new JsonResult();
+        try {
+            if(advertisementService.updateAdvertisementOfExpiretime(targetId,expiretime) != 0){
+                jsonResult.setErrorCode(GlobalConstants.operaction_success_code);
+                jsonResult.setMessage(GlobalConstants.operaction_success_message);
+            }else{
+                throw new NullPointerException();
+            }
+        }catch (Exception e){
+            jsonResult.setErrorCode(GlobalConstants.operaction_failed_code);
+            jsonResult.setMessage(GlobalConstants.operaction_failed_message);
+        }
+        return jsonResult;
+    }
+
+    @PostMapping(value = "/updateAdvertisementOfWidth")
+    @ResponseBody
+    public JsonResult updateAdvertisementOfWidth(@RequestParam(value = "targetId" , required = true)Integer targetId,
+                                                @RequestParam(value = "width" , required = true)String width){
+        JsonResult jsonResult = new JsonResult();
+        try {
+            if(advertisementService.updateAdvertisementOfWidth(targetId,width) != 0){
+                jsonResult.setErrorCode(GlobalConstants.operaction_success_code);
+                jsonResult.setMessage(GlobalConstants.operaction_success_message);
+            }else{
+                throw new NullPointerException();
+            }
+        }catch (Exception e){
+            jsonResult.setErrorCode(GlobalConstants.operaction_failed_code);
+            jsonResult.setMessage(GlobalConstants.operaction_failed_message);
+        }
+        return jsonResult;
+    }
+
+    @PostMapping(value = "/updateAdvertisementOfHeight")
+    @ResponseBody
+    public JsonResult updateAdvertisementOfHeight(@RequestParam(value = "targetId" , required = true)Integer targetId,
+                                                    @RequestParam(value = "height" , required = true)String height){
+        JsonResult jsonResult = new JsonResult();
+        try {
+            if(advertisementService.updateAdvertisementOfHeight(targetId,height) != 0){
+                jsonResult.setErrorCode(GlobalConstants.operaction_success_code);
+                jsonResult.setMessage(GlobalConstants.operaction_success_message);
+            }else{
+                throw new NullPointerException();
+            }
+        }catch (Exception e){
+            jsonResult.setErrorCode(GlobalConstants.operaction_failed_code);
+            jsonResult.setMessage(GlobalConstants.operaction_failed_message);
+        }
+        return jsonResult;
+    }
+
+    @PostMapping(value = "/updateAdvertisementOfShowurlposition")
+    @ResponseBody
+    public JsonResult updateAdvertisementOfShowurlposition(@RequestParam(value = "targetId" , required = true)Integer targetId,
+                                                            @RequestParam(value = "showurlposition" , required = true)String showurlposition){
+        JsonResult jsonResult = new JsonResult();
+        try {
+            if(advertisementService.updateAdvertisementOfShowurlposition(targetId,showurlposition) != 0){
+                jsonResult.setErrorCode(GlobalConstants.operaction_success_code);
+                jsonResult.setMessage(GlobalConstants.operaction_success_message);
+            }else{
+                throw new NullPointerException();
+            }
+        }catch (Exception e){
+            jsonResult.setErrorCode(GlobalConstants.operaction_failed_code);
+            jsonResult.setMessage(GlobalConstants.operaction_failed_message);
+        }
+        return jsonResult;
+    }
+
+    @PostMapping(value = "/updateAdvertisementOfIsfixedshow")
+    @ResponseBody
+    public JsonResult updateAdvertisementOfIsfixedshow(@RequestParam(value = "targetId" , required = true)Integer targetId,
+                                                       @RequestParam(value = "isfixedshow" , required = true)String isfixedshow){
+        JsonResult jsonResult = new JsonResult();
+        try {
+            if(advertisementService.updateAdvertisementOfIsfixedshow(targetId,isfixedshow) != 0){
+                jsonResult.setErrorCode(GlobalConstants.operaction_success_code);
+                jsonResult.setMessage(GlobalConstants.operaction_success_message);
+            }else{
+                throw new NullPointerException();
+            }
+        }catch (Exception e){
+            jsonResult.setErrorCode(GlobalConstants.operaction_failed_code);
+            jsonResult.setMessage(GlobalConstants.operaction_failed_message);
+        }
+        return jsonResult;
+    }
+
+    @PostMapping(value = "/updateAdvertisementOfAdvertname")
+    @ResponseBody
+    public JsonResult updateAdvertisementOfAdvertname(@RequestParam(value = "targetId" , required = true)Integer targetId,
+                                                       @RequestParam(value = "advertname" , required = true)String advertname){
+        JsonResult jsonResult = new JsonResult();
+        try {
+            if(advertisementService.updateAdvertisementOfAdvertname(targetId,advertname) != 0){
+                jsonResult.setErrorCode(GlobalConstants.operaction_success_code);
+                jsonResult.setMessage(GlobalConstants.operaction_success_message);
+            }else{
+                throw new NullPointerException();
+            }
+        }catch (Exception e){
+            jsonResult.setErrorCode(GlobalConstants.operaction_failed_code);
+            jsonResult.setMessage(GlobalConstants.operaction_failed_message);
+        }
+        return jsonResult;
+    }
+
 }

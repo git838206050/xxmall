@@ -71,6 +71,7 @@
             <columnOverride column="propertyValueGroup" javaType="java.lang.String" jdbcType="VARCHAR" />
         </table>
         <table schema="" tableName="sales_property_key" />
+        <table schema="" tableName="advertisement" />
 
         <table schema="" tableName="shop" />
         <table schema="" tableName="user" />
@@ -81,8 +82,12 @@
         <table schema="" tableName="product_fd_image" />
 
         <table schema="" tableName="testDao" />
+
+        <table schema="" tableName="user_detailed_info" />
+        <table schema="" tableName="pd_order" />
+        <table schema="" tableName="log_user_recharge" />
+        <table schema="" tableName="pd_order" />
         -->
-        <table schema="" tableName="advertisement" />
 
     </context>
 </generatorConfiguration>

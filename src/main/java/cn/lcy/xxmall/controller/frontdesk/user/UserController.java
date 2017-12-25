@@ -50,7 +50,7 @@ public class UserController {
             // 把token保存到redis缓存内，key规范为"user_"加管理员id
             Jedis jedis = JedisUtil.getJedis();
             jedis.hmset("user_"+user.getId(),userMap);
-            jedis.expire("user_"+user.getId(),60*60*2);    // 设置有效时间，时间到了会自动删除该值。单位为：秒（这里设置的有效时间是2小时）
+            jedis.expire("user_"+user.getId(),60*60*2);    // 设置有效时间，时间到了会自动删除该值。单位为：秒（60*60*2表示的有效时间是2小时）
 
             userMap.put("userId",String.valueOf(user.getId()));
             userMap.put("nickname",user.getNickname());

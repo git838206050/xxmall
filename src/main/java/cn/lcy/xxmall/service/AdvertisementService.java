@@ -47,6 +47,54 @@ public interface AdvertisementService {
     int updateAdvertisement(Advertisement advertisement);
 
     /**
+     * 更新广告到期时间
+     * @param targetId 广告对象id
+     * @param expiretime 到期时间
+     * @return
+     */
+    int updateAdvertisementOfExpiretime(int targetId, String expiretime);
+
+    /**
+     * 根据标识修改指定广告
+     * @param targetId 对象ID
+     * @param width 广告图片宽度
+     * @return 0表示失败
+     */
+    int updateAdvertisementOfWidth(int targetId, String width);
+
+    /**
+     * 根据标识修改指定广告
+     * @param targetId 对象ID
+     * @param height 广告图片高度
+     * @return 0表示失败
+     */
+    int updateAdvertisementOfHeight(int targetId, String height);
+
+    /**
+     * 根据标识修改指定广告
+     * @param targetId 对象ID
+     * @param showurlposition 显示位置
+     * @return 0表示失败
+     */
+    int updateAdvertisementOfShowurlposition(int targetId, String showurlposition);
+
+    /**
+     * 根据标识修改指定广告
+     * @param targetId 对象ID
+     * @param isfixedshow 是否固定显示
+     * @return 0表示失败
+     */
+    int updateAdvertisementOfIsfixedshow(int targetId, String isfixedshow);
+
+    /**
+     * 根据标识修改指定广告
+     * @param targetId 对象ID
+     * @param advertname 广告名称
+     * @return 0表示失败
+     */
+    int updateAdvertisementOfAdvertname(int targetId, String advertname);
+
+    /**
      * 根据标识执行广告到期操作
      * @param id 广告ID
      * @return

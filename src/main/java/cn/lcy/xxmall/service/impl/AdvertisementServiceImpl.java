@@ -27,7 +27,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         Integer state = 0;
         // 添加图片
         String[] fileType = {"jpg","png"};
-        String fileCatalog = "advertisement";
+        String fileCatalog = "advertisement\\";
         String imageUrl = FileUtilByLcy.uploadImageFile( advertisementImage, 1048576L, fileType, fileCatalog, false, (byte)1);
         if(imageUrl.length() < 2){
             state = 0;
@@ -78,6 +78,72 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             advertisement.setExpiretime(oAdvertisement.getExpiretime());
         }
         return advertisementMapper.insert(advertisement);
+    }
+
+    @Override
+    public int updateAdvertisementOfExpiretime(int targetId, String expiretime) {
+        int state = 0;
+        Advertisement oAdvertisement = advertisementMapper.selectByPrimaryKey(targetId);
+        if(oAdvertisement != null && DateUtil.getDate(expiretime,0) != null){
+            oAdvertisement.setExpiretime(DateUtil.getDate(expiretime,0));
+            state = advertisementMapper.updateByPrimaryKey(oAdvertisement);
+        }
+        return state;
+    }
+
+    @Override
+    public int updateAdvertisementOfWidth(int targetId, String width) {
+        int state = 0;
+        Advertisement oAdvertisement = advertisementMapper.selectByPrimaryKey(targetId);
+        if(oAdvertisement!=null && Double.valueOf(width)!=null){
+            oAdvertisement.setWidth(Double.valueOf(width));
+            state = advertisementMapper.updateByPrimaryKey(oAdvertisement);
+        }
+        return state;
+    }
+
+    @Override
+    public int updateAdvertisementOfHeight(int targetId, String height) {
+        int state = 0;
+        Advertisement oAdvertisement = advertisementMapper.selectByPrimaryKey(targetId);
+        if(oAdvertisement!=null && Double.valueOf(height)!=null){
+            oAdvertisement.setHeight(Double.valueOf(height));
+            state = advertisementMapper.updateByPrimaryKey(oAdvertisement);
+        }
+        return state;
+    }
+
+    @Override
+    public int updateAdvertisementOfShowurlposition(int targetId, String showurlposition) {
+        int state = 0;
+        Advertisement oAdvertisement = advertisementMapper.selectByPrimaryKey(targetId);
+        if(oAdvertisement!=null && showurlposition!=null){
+            oAdvertisement.setShowurlposition(showurlposition);
+            state = advertisementMapper.updateByPrimaryKey(oAdvertisement);
+        }
+        return state;
+    }
+
+    @Override
+    public int updateAdvertisementOfIsfixedshow(int targetId, String isfixedshow) {
+        int state = 0;
+        Advertisement oAdvertisement = advertisementMapper.selectByPrimaryKey(targetId);
+        if(oAdvertisement!=null && Byte.valueOf(isfixedshow)!=null){
+            oAdvertisement.setIsfixedshow(Byte.valueOf(isfixedshow));
+            state = advertisementMapper.updateByPrimaryKey(oAdvertisement);
+        }
+        return state;
+    }
+
+    @Override
+    public int updateAdvertisementOfAdvertname(int targetId, String advertname) {
+        int state = 0;
+        Advertisement oAdvertisement = advertisementMapper.selectByPrimaryKey(targetId);
+        if(oAdvertisement!=null && advertname!=null){
+            oAdvertisement.setAdvertname(advertname);
+            state = advertisementMapper.updateByPrimaryKey(oAdvertisement);
+        }
+        return state;
     }
 
     @Override

@@ -31,7 +31,7 @@ public class DateUtil {
      * 用于String转换成Date
      * @param dateStr 需要转换的string 类型的时间
      * @param typeNum 时间的类型，对应TYPE常量的序号
-     * @return
+     * @return null 表示转换错误
      */
     public static Date getDate(String dateStr, int typeNum){
         date = null;
