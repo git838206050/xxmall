@@ -28,21 +28,21 @@ public interface PdOrderService {
     List<PdOrder> getPdOrders();
 
     /**
-     * 根据表示获取订单集合
+     * 根据标识获取订单集合
      * @param userId 用户id
      * @return
      */
     List<PdOrder> getPdOrders(int userId);
 
     /**
-     * 根据表示获取订单集合
+     * 根据标识获取订单集合
      * @param createTime 下单时间
      * @return
      */
     List<PdOrder> getPdOrdersOfCreateTime(String createTime);
 
     /**
-     * 根据表示获取订单集合
+     * 根据标识获取订单集合
      * @param expressNo 快递号
      * @return
      */
@@ -54,5 +54,40 @@ public interface PdOrderService {
      * @return 0表示更新失败
      */
     int updataPdOrder(PdOrder pdOrder);
+
+    /**
+     * 根据标识编辑订单
+     * @param expressNo 快递号
+     * @return 0表示更新失败
+     */
+    int updataPdOrderOfExpressNo(int orderId, String expressNo);
+
+    /**
+     * 根据标识编辑订单
+     * @param isClosed 是否已完结订单
+     * @return 0表示更新失败
+     */
+    int updataPdOrderOfIsClosed(int orderId, String isClosed);
+
+    /**
+     * 根据标识编辑订单
+     * @param expressName 快递号
+     * @return 0表示更新失败
+     */
+    int updataPdOrderOfExpressName(int orderId, String expressName);
+
+    /**
+     * 根据标识编辑订单
+     * @param deliverAddress 收货地址
+     * @return 0表示更新失败
+     */
+    int updataPdOrderOfDeliverAddress(int orderId, String deliverAddress);
+
+    /**
+     * 根据标识编辑订单
+     * @param orderStatus 订单状态
+     * @return 0表示更新失败
+     */
+    int updataPdOrderOfOrderStatus(int orderId, String orderStatus);
 
 }

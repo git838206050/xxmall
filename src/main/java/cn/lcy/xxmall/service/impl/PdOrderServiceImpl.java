@@ -103,4 +103,57 @@ public class PdOrderServiceImpl implements PdOrderService{
             return state;
         }
     }
+
+    @Override
+    public int updataPdOrderOfExpressNo(int orderId, String expressNo) {
+        PdOrder pdOrder = pdOrderMapper.selectByPrimaryKey(orderId);
+        pdOrder.setExpressno(expressNo);
+        return pdOrderMapper.updateByPrimaryKey(pdOrder);
+    }
+
+    @Override
+    public int updataPdOrderOfIsClosed(int orderId, String isClosed) {
+        int state = 0;
+        try {
+            PdOrder pdOrder = pdOrderMapper.selectByPrimaryKey(orderId);
+            pdOrder.setIsclosed(Byte.valueOf(isClosed));
+            state = pdOrderMapper.updateByPrimaryKey(pdOrder);
+        }catch (Exception e){
+            state = 0;
+        }
+        return state;
+    }
+
+    @Override
+    public int updataPdOrderOfExpressName(int orderId, String expressName) {
+        PdOrder pdOrder = pdOrderMapper.selectByPrimaryKey(orderId);
+        pdOrder.setExpressname(expressName);
+        return pdOrderMapper.updateByPrimaryKey(pdOrder);
+    }
+
+    @Override
+    public int updataPdOrderOfDeliverAddress(int orderId, String deliverAddress) {
+        PdOrder pdOrder = pdOrderMapper.selectByPrimaryKey(orderId);
+        pdOrder.setDeliveraddress(deliverAddress);
+        return pdOrderMapper.updateByPrimaryKey(pdOrder);
+    }
+
+    @Override
+    public int updataPdOrderOfOrderStatus(int orderId, String orderStatus) {
+        int state = 0;
+        try {
+            Byte ByteOrderStatus = Byte.valueOf(orderStatus);
+            if(ByteOrderStatus<0 || ByteOrderStatus>5){
+                throw new NullPointerException();
+            }
+            PdOrder pdOrder = pdOrderMapper.selectByPrimaryKey(orderId);
+            pdOrder.setOrderstatus(Byte.valueOf(orderStatus));
+            state = pdOrderMapper.updateByPrimaryKey(pdOrder);
+        }catch (Exception e){
+            state = 0;
+        }finally {
+            return state;
+        }
+    }
+
 }

@@ -6,7 +6,6 @@ import cn.lcy.xxmall.pojo.common.JsonLayui;
 import cn.lcy.xxmall.pojo.common.JsonResult;
 import cn.lcy.xxmall.service.AdminService;
 import cn.lcy.xxmall.util.DateUtil;
-import cn.lcy.xxmall.util.JedisUtil;
 import cn.lcy.xxmall.util.Md5Util;
 import cn.lcy.xxmall.util.StrUtil;
 import com.github.pagehelper.PageHelper;
@@ -19,17 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import redis.clients.jedis.Jedis;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 管理员管理
