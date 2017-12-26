@@ -1,5 +1,6 @@
 package cn.lcy.xxmall.controller.backstage.order;
 
+import cn.lcy.xxmall.constants.GlobalConstants;
 import cn.lcy.xxmall.pojo.PdOrder;
 import cn.lcy.xxmall.pojo.common.JsonLayui;
 import cn.lcy.xxmall.service.PdOrderService;
@@ -21,6 +22,7 @@ public class OrderManageController {
     @Autowired
     private PdOrderService pdOrderService;
 
+    @RequestMapping(value = "/showOrder")
     public JsonLayui shopAdmins(@RequestParam(value = "page" , required = false) Integer page,
                                 @RequestParam(value = "limit" , required = false) Integer limit){
         JsonLayui jsonLayui = new JsonLayui();
@@ -37,7 +39,18 @@ public class OrderManageController {
         PageHelper.startPage(page,limit);
         List<PdOrder> pdOrderList = pdOrderService.getPdOrders();
         PageInfo pageInfo = new PageInfo(pdOrderList);
-
+        if(pdOrderList.size() > 0){
+            jsonLayui.setCode(0);
+            // 获取数据的总数
+            jsonLayui.setCount( pageInfo.getTotal() );
+            jsonLayui.setMsg(GlobalConstants.operaction_success_message);
+            jsonLayui.setData(jsonLayui.toObject(pdOrderList));
+        }else{
+            jsonLayui.setCode(0);
+            jsonLayui.setMsg(GlobalConstants.operaction_failed_message);
+        }
+        jsonLayui.setLimit(Long.valueOf(limit));
+        jsonLayui.setPage(Long.valueOf(page));
         return  jsonLayui;
     }
 
