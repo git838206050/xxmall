@@ -2,11 +2,14 @@ package cn.lcy.xxmall.controller.backstage.productmanage;
 
 import cn.lcy.xxmall.pojo.FdImage;
 import cn.lcy.xxmall.pojo.Product;
+import cn.lcy.xxmall.pojo.common.JsonLayui;
 import cn.lcy.xxmall.pojo.common.JsonResult;
 import cn.lcy.xxmall.service.*;
 import cn.lcy.xxmall.util.FileUtilByLcy;
 import cn.lcy.xxmall.util.Md5Util;
 import cn.lcy.xxmall.util.StrUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -154,4 +157,44 @@ public class ProductManageController {
         System.out.println("--");
          return jsonResult;
     }
+
+    @RequestMapping(value = "showProductByProductState")
+    @ResponseBody
+    public JsonLayui showProductByProductState(@RequestParam(value = "poductState",required = false)String poductState,
+                                              @RequestParam(value = "page" , required = false) Integer page,
+                                              @RequestParam(value = "limit" , required = false) Integer limit){
+        JsonLayui jsonLayui = new JsonLayui();
+        try {
+            // 默认显示第一页
+            if(page == null || page < 1){
+                page = 1;
+            }
+            // 默认每页显示5条
+            if(limit == null || limit < 1){
+                limit = 5;
+            }
+
+            // 默认显示商品类型
+            if(poductState==null){
+                poductState = "0";
+            }
+
+            // 分页
+            PageHelper.startPage(page,limit);
+            List<Product> productList = productService.getProductByProductState(Byte.valueOf(poductState));
+            PageInfo pageInfo = new PageInfo(productList);
+
+            jsonLayui.setCount( pageInfo.getTotal() );
+            jsonLayui.setData(jsonLayui.toObject(productList));
+            jsonLayui.setCode(0);
+            jsonLayui.setLimit(Long.valueOf(limit));
+            jsonLayui.setPage(Long.valueOf(page));
+
+        }catch (Exception e){
+            jsonLayui.setCode(0);
+        }finally {
+            return jsonLayui;
+        }
+    }
+
 }
