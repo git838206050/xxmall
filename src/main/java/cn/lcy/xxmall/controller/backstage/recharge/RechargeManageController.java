@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -83,7 +84,12 @@ public class RechargeManageController {
             }
             // 分页
             PageHelper.startPage(page,limit);
-            List<LogUserRecharge> logUserRecharge = logUserRechargeService.getLogUserRechargeOfRechargeState(state);
+            List<LogUserRecharge> logUserRecharge;
+            if(state!=null){
+                logUserRecharge = logUserRechargeService.getLogUserRechargeOfRechargeState(state);
+            }else{
+                logUserRecharge = logUserRechargeService.getLogUserRecharges();
+            }
             PageInfo pageInfo = new PageInfo(logUserRecharge);
             if(logUserRecharge.size() > 0){
                 jsonLayui.setCode(0);
@@ -105,4 +111,43 @@ public class RechargeManageController {
             return jsonLayui;
         }
     }
+
+    /**
+     * 获取所有充值日志
+     * @param state 状态码
+     * @return
+     */
+    @RequestMapping(value = "/updateRecharges")
+    @ResponseBody
+    public JsonResult updateRecharges(@RequestParam(value = "targetId", required = false)Integer targetId,
+                                      @RequestParam(value = "state", required = false)Integer state,
+                                      @RequestParam(value = "rechargenumber", required = false)String rechargenumber,
+                                      @RequestParam(value = "paymentvoucher", required = false)String paymentvoucher){
+        JsonResult jsonResult = new JsonResult();
+        LogUserRecharge logUserRecharge = new LogUserRecharge();
+        try {
+            logUserRecharge.setId(targetId);
+            logUserRecharge.setPaymentvoucher(paymentvoucher);
+            if(state!=null){
+                logUserRecharge.setRechargestate((byte)state.intValue());
+            }
+            if(rechargenumber!=null && !"".equals(rechargenumber)){
+                logUserRecharge.setRechargenumber(new BigDecimal(rechargenumber));
+            }
+            int returnState = logUserRechargeService.updateRecharge(logUserRecharge);
+            if (returnState != 1) {
+                jsonResult.setMessage(GlobalConstants.operaction_failed_message);
+                jsonResult.setErrorCode(GlobalConstants.operaction_failed_code);
+            } else {
+                jsonResult.setMessage(GlobalConstants.operaction_success_message);
+                jsonResult.setErrorCode(GlobalConstants.operaction_success_code);
+            }
+        }catch (Exception e){
+            jsonResult.setMessage(GlobalConstants.operaction_failed_message);
+            jsonResult.setErrorCode(GlobalConstants.operaction_failed_code);
+        }finally {
+            return jsonResult;
+        }
+    }
+
 }

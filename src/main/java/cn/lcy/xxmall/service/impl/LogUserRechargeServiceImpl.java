@@ -80,19 +80,26 @@ public class LogUserRechargeServiceImpl implements LogUserRechargeService {
         BigDecimal bigDecimal = new BigDecimal(0);
         try{
             LogUserRecharge oLogUserRecharge1 = logUserRechargeMapper.selectByPrimaryKey(logUserRecharge.getId());
-            if(logUserRecharge.getRechargenumber()!=null && bigDecimal.compareTo(logUserRecharge.getRechargenumber()) == 1){
+            if(logUserRecharge.getRechargenumber()!=null && bigDecimal.compareTo(logUserRecharge.getRechargenumber()) != 1){
                 oLogUserRecharge1.setRechargenumber(logUserRecharge.getRechargenumber());
+                state = 1;
             }
             if(logUserRecharge.getUserip()!=null){
                 oLogUserRecharge1.setUserip(logUserRecharge.getUserip());
+                state = 1;
             }
             if(logUserRecharge.getRechargestate()!=null){
                 oLogUserRecharge1.setRechargestate(logUserRecharge.getRechargestate());
+                state = 1;
             }
             if(logUserRecharge.getPaymentvoucher()!=null){
                 oLogUserRecharge1.setPaymentvoucher(logUserRecharge.getPaymentvoucher());
+                state = 1;
             }
-            state = logUserRechargeMapper.updateByPrimaryKey(oLogUserRecharge1);
+
+            if(state == 1){
+                state = logUserRechargeMapper.updateByPrimaryKey(oLogUserRecharge1);
+            }
         }catch (Exception e){
             state = 0;
         }finally {
