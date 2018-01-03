@@ -40,8 +40,10 @@ public class TestRedis {
         while(it.hasNext()){
             String key = it.next();
             System.out.println(key);
-            System.out.println( jedis.hmget(key,"uToken","endTime").get(0) );
-            System.out.println( jedis.hmget(key,"uToken","endTime").get(1) );
+//            System.out.println( jedis.hmget(key,"uToken","endTime").get(0) );
+//            System.out.println( jedis.hmget(key,"uToken","endTime").get(1) );
+            System.out.println( jedis.hmget(key,"token","endTime").get(0) );
+            System.out.println( jedis.hmget(key,"token","endTime").get(1) );
         }
     }
 }

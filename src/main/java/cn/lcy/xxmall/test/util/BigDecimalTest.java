@@ -12,7 +12,11 @@ public class BigDecimalTest {
     @Test
     public void bigDecimal(){
         BigDecimal a = new BigDecimal(1.0);
-        BigDecimal b = new BigDecimal(0);
+        BigDecimal b = new BigDecimal(2);
+
         System.out.println(a.compareTo(b));
+
+        BigDecimal str = new BigDecimal("2");
+        System.out.println(str);
     }
 }
