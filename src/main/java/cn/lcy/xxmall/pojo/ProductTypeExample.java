@@ -373,6 +373,66 @@ public class ProductTypeExample {
             addCriterion("seed not between", value1, value2, "seed");
             return (Criteria) this;
         }
+
+        public Criteria andOrdernumIsNull() {
+            addCriterion("orderNum is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdernumIsNotNull() {
+            addCriterion("orderNum is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdernumEqualTo(Integer value) {
+            addCriterion("orderNum =", value, "ordernum");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdernumNotEqualTo(Integer value) {
+            addCriterion("orderNum <>", value, "ordernum");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdernumGreaterThan(Integer value) {
+            addCriterion("orderNum >", value, "ordernum");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdernumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("orderNum >=", value, "ordernum");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdernumLessThan(Integer value) {
+            addCriterion("orderNum <", value, "ordernum");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdernumLessThanOrEqualTo(Integer value) {
+            addCriterion("orderNum <=", value, "ordernum");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdernumIn(List<Integer> values) {
+            addCriterion("orderNum in", values, "ordernum");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdernumNotIn(List<Integer> values) {
+            addCriterion("orderNum not in", values, "ordernum");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdernumBetween(Integer value1, Integer value2) {
+            addCriterion("orderNum between", value1, value2, "ordernum");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrdernumNotBetween(Integer value1, Integer value2) {
+            addCriterion("orderNum not between", value1, value2, "ordernum");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

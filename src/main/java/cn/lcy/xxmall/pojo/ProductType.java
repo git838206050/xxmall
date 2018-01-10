@@ -9,6 +9,8 @@ public class ProductType {
 
     private String seed;
 
+    private Integer ordernum;
+
     public Integer getId() {
         return id;
     }
@@ -39,5 +41,13 @@ public class ProductType {
 
     public void setSeed(String seed) {
         this.seed = seed == null ? null : seed.trim();
+    }
+
+    public Integer getOrdernum() {
+        return ordernum;
+    }
+
+    public void setOrdernum(Integer ordernum) {
+        this.ordernum = ordernum;
     }
 }

@@ -40,6 +40,26 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     }
 
     @Override
+    public List<ProductType> getProductTypeByOrderNum(int orderNum) {
+        ProductTypeExample productTypeExample = new ProductTypeExample();
+        ProductTypeExample.Criteria criteria = productTypeExample.or();
+        criteria.andOrdernumEqualTo(orderNum);
+        List<ProductType> productTypeList = productTypeMapper.selectByExample(productTypeExample);
+
+        return productTypeList;
+    }
+
+    @Override
+    public List<ProductType> getProductTypeByOrderNum(int orderNum1, int orderNum2) {
+        ProductTypeExample productTypeExample = new ProductTypeExample();
+        ProductTypeExample.Criteria criteria = productTypeExample.or();
+        criteria.andOrdernumBetween(orderNum1, orderNum2);
+        List<ProductType> productTypeList = productTypeMapper.selectByExample(productTypeExample);
+
+        return productTypeList;
+    }
+
+    @Override
     public List<ProductType> getProductTypesByParent(String parent) {
         ProductTypeExample productTypeExample = new ProductTypeExample();
         ProductTypeExample.Criteria criteria = productTypeExample.or();

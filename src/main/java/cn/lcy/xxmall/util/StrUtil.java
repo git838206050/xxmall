@@ -100,7 +100,7 @@ public class StrUtil {
     }
 
     /**
-     * 获取所有<a></a>标签里面的hear 路径
+     * 获取所有<index></index>标签里面的hear 路径
      * @param str
      * @return
      */
@@ -118,7 +118,7 @@ public class StrUtil {
     }
 
     /**
-     * 过滤所有<a></a>标签里面的hear 路径。如<a href="baidu.com"></a> --> <a href=""></a>
+     * 过滤所有<index></index>标签里面的hear 路径。如<index href="baidu.com"></index> --> <index href=""></index>
      * @param str
      * @return
      */

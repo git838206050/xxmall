@@ -26,7 +26,7 @@ public class StrUtilTest {
 //        System.out.println(new StrUtil().dislodgeScriptTag(str2));
 
 
-        String aTag = "asd<a href=\"eed\">abc</a>bdfsd<a href=\"ee123d\">ab132c</a>bdf";
+        String aTag = "asd<index href=\"eed\">abc</index>bdfsd<index href=\"ee123d\">ab132c</index>bdf";
         System.out.println(new StrUtil().getATagHear(aTag).get(0).toString());
     }
 }

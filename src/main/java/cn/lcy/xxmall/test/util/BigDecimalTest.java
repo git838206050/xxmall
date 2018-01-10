@@ -18,5 +18,8 @@ public class BigDecimalTest {
 
         BigDecimal str = new BigDecimal("2");
         System.out.println(str);
+
+        Byte tByte = -2;
+        System.out.println(tByte);
     }
 }

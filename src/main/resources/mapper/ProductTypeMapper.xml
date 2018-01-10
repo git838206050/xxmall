@@ -6,6 +6,7 @@
     <result column="productTypeName" jdbcType="CHAR" property="producttypename" />
     <result column="parent" jdbcType="CHAR" property="parent" />
     <result column="seed" jdbcType="CHAR" property="seed" />
+    <result column="orderNum" jdbcType="INTEGER" property="ordernum" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, productTypeName, parent, seed
+    id, productTypeName, parent, seed, orderNum
   </sql>
   <select id="selectByExample" parameterType="cn.lcy.xxmall.pojo.ProductTypeExample" resultMap="BaseResultMap">
     select
@@ -100,9 +101,9 @@
   </delete>
   <insert id="insert" parameterType="cn.lcy.xxmall.pojo.ProductType">
     insert into product_type (id, productTypeName, parent, 
-      seed)
+      seed, orderNum)
     values (#{id,jdbcType=INTEGER}, #{producttypename,jdbcType=CHAR}, #{parent,jdbcType=CHAR}, 
-      #{seed,jdbcType=CHAR})
+      #{seed,jdbcType=CHAR}, #{ordernum,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.lcy.xxmall.pojo.ProductType">
     insert into product_type
@@ -119,6 +120,9 @@
       <if test="seed != null">
         seed,
       </if>
+      <if test="ordernum != null">
+        orderNum,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -132,6 +136,9 @@
       </if>
       <if test="seed != null">
         #{seed,jdbcType=CHAR},
+      </if>
+      <if test="ordernum != null">
+        #{ordernum,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -156,6 +163,9 @@
       <if test="record.seed != null">
         seed = #{record.seed,jdbcType=CHAR},
       </if>
+      <if test="record.ordernum != null">
+        orderNum = #{record.ordernum,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -166,7 +176,8 @@
     set id = #{record.id,jdbcType=INTEGER},
       productTypeName = #{record.producttypename,jdbcType=CHAR},
       parent = #{record.parent,jdbcType=CHAR},
-      seed = #{record.seed,jdbcType=CHAR}
+      seed = #{record.seed,jdbcType=CHAR},
+      orderNum = #{record.ordernum,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,6 +194,9 @@
       <if test="seed != null">
         seed = #{seed,jdbcType=CHAR},
       </if>
+      <if test="ordernum != null">
+        orderNum = #{ordernum,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -190,7 +204,8 @@
     update product_type
     set productTypeName = #{producttypename,jdbcType=CHAR},
       parent = #{parent,jdbcType=CHAR},
-      seed = #{seed,jdbcType=CHAR}
+      seed = #{seed,jdbcType=CHAR},
+      orderNum = #{ordernum,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
