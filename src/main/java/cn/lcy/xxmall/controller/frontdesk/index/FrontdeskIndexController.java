@@ -25,7 +25,7 @@ public class FrontdeskIndexController {
     public JsonResult showProductType(){
         JsonResult jsonResult = new JsonResult();
         Map<Object,Object> productTypeMap = new HashMap<Object, Object>();
-        productTypeMap.put("productType",productTypeService.getProductTypeByOrderNum(0,4));
+        productTypeMap.put("productType",productTypeService.getProductTypeByOrderNum(0,16));
 
         jsonResult.setItem(productTypeMap);
         jsonResult.setMessage("连接成功！");

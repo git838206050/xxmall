@@ -1,4 +1,8 @@
-1、使用jdk为1.8版本
+1、
+    运行环境：tomcat8.0
+    环境配置： jdk8 、mySQL5.7、redis3.2
+    数据库 bg_开头与page_message的表请不要随意清空（除bg_image外）
+
 2、第一次配置项目时，需修改 main/java/cn/lcy/xxmall/constants/GlobalConstants.java文件下的：
     private static String bgFileUploadUrl 属性。
     具体属性值在controller（随便一个controller都可以） 使用httpSeHttpServletRequest.getSession().getServletContext().getRealPath("/") 获取该路径。

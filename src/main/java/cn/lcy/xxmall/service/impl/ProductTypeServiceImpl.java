@@ -54,6 +54,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         ProductTypeExample productTypeExample = new ProductTypeExample();
         ProductTypeExample.Criteria criteria = productTypeExample.or();
         criteria.andOrdernumBetween(orderNum1, orderNum2);
+        productTypeExample.setOrderByClause("ordernum asc");
         List<ProductType> productTypeList = productTypeMapper.selectByExample(productTypeExample);
 
         return productTypeList;

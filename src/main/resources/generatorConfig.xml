@@ -5,8 +5,8 @@
 
 <generatorConfiguration>
     <!--mysql 连接数据库jar 这里选择自己本地位置-->
-    <classPathEntry location="G:/mysql-connector-java-5.1.6-bin.jar" />
-    <!--<classPathEntry location="G:/mysql-connector-java-5.1.2.jar" />-->
+    <!--<classPathEntry location="G:/mysql-connector-java-5.1.6-bin.jar" />-->
+    <classPathEntry location="G:/mysql-connector-java-5.1.2.jar" />
     <context id="testTables" targetRuntime="MyBatis3">
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
@@ -88,6 +88,6 @@
         <table schema="" tableName="log_user_recharge" />
         <table schema="" tableName="pd_order" />
         -->
-        <table schema="" tableName="log_user_recharge" />
+        <table schema="" tableName="product_type" />
     </context>
 </generatorConfiguration>
